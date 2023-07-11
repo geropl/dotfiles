@@ -1,0 +1,16 @@
+[alias]
+  co = checkout
+  cob = checkout -b
+  ci = commit
+  cia = commit --amend --no-edit
+  cis = commit --signoff
+  cif = commit --fixup
+  st = status
+  br = branch
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short -n 100
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  pu = "!f() { git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD); }; f"
+  puf = push --force
+  branches = branch --list
+  tags = tag --list
+	lg22 = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
