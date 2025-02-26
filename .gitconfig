@@ -1,19 +1,71 @@
 [alias]
+st = status
 co = checkout
 cob = checkout -b
 ci = commit
-cia = commit --amend --no-edit
-cis = commit --signoff
+cia = commit --amend
 cif = commit --fixup
-st = status
-br = branch
-hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short -n 100
-lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-pu = "!f() { git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD); }; f"
+pu = push
 puf = push --force
 branches = branch --list
-tags = tag --list
-lg22 = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+br = branch
+fp = fetch --prune --prune-tags
 
+hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short -n 100
+lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+tags = tag --list
+
+# source for the following: https://blog.gitbutler.com/how-git-core-devs-configure-git/
+# clearly makes git better
+
+[column]
+    ui = auto
+[branch]
+    sort = -committerdate
+[tag]
+    sort = version:refname
+[init]
+    defaultBranch = main
+[diff]
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
 [push]
-autoSetupRemote = true
+    default = simple
+    autoSetupRemote = true
+    # don't push all tags by default
+    #followTags = true
+[fetch]
+    # don't make fetch prune by default, rather use "fp" alias
+    #prune = true
+    #pruneTags = true
+    all = true
+
+# why the hell not?
+
+[help]
+    autocorrect = prompt
+[commit]
+    verbose = true
+[rerere]
+    enabled = true
+    autoupdate = true
+[core]
+    # don't see the point in this
+    #excludesfile = ~/.gitignore
+[rebase]
+    autoSquash = true
+    autoStash = true
+    updateRefs = true
+
+# a matter of taste (uncomment if you dare)
+
+[core]
+    # fsmonitor = true
+    # untrackedCache = true
+[merge]
+    # (just 'diff3' if git version < 2.3)
+    # conflictstyle = zdiff3 
+[pull]
+    rebase = true
