@@ -19,7 +19,7 @@ cat .bashrc >> ~/.bashrc
 # git
 
 echo "Setting up git..."
-echo "\n[include]\npath = /home/gitpod/.dotfiles/.gitconfig\n" >> ~/.gitconfig
+printf "\n[include]\npath = /home/gitpod/.dotfiles/.gitconfig\n" >> ~/.gitconfig
 
 popd
 
