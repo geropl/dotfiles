@@ -22,9 +22,9 @@ printf "\n[include]\npath = /home/gitpod/.dotfiles/.gitconfig\n" >> ~/.gitconfig
 
 # linear MCP server
 # TODO(gpl): Think about a) referencing a fixed commit hash for the script, and b) a fixed version instead of "latest"
-RELEASE=$(curl -s https://api.github.com/repos/geropl/linear-mcp-go/releases/latest)
-DOWNLOAD_URL=$(echo $RELEASE | jq -r '.assets[] | select(.name | contains("linux")) | .browser_download_url')
-curl -L -o ./linear-mcp-go $DOWNLOAD_URL
+RELEASE="$(curl -s https://api.github.com/repos/geropl/linear-mcp-go/releases/latest)"
+DOWNLOAD_URL="$(echo $RELEASE | jq -r '.assets[] | select(.name | contains("linux")) | .browser_download_url')"
+curl -L -o ./linear-mcp-go "$DOWNLOAD_URL"
 chmod +x ./linear-mcp-go
 
 ./linear-mcp-go setup --write-access $LINEAR_MCP_WRITE_ACCESS --auto-approve=allow-read-only || true
