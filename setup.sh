@@ -27,17 +27,17 @@ DOWNLOAD_URL="$(echo $RELEASE | jq -r '.assets[] | select(.name | contains("linu
 curl -L -o ./linear-mcp-go "$DOWNLOAD_URL"
 chmod +x ./linear-mcp-go
 
-./linear-mcp-go setup --write-access="$LINEAR_MCP_WRITE_ACCESS" --auto-approve=allow-read-only || true
+./linear-mcp-go setup --write-access="${LINEAR_MCP_WRITE_ACCESS:-false}" --auto-approve=allow-read-only || true
 rm -f ./linear-mcp-go
 
 # git MCP server
-RELEASE=$(curl -s https://api.github.com/repos/geropl/git-mcp-go/releases/latest)
-DOWNLOAD_URL=$(echo $RELEASE | jq -r '.assets[] | select(.name | contains("linux")) | .browser_download_url')
+RELEASE="$(curl -s https://api.github.com/repos/geropl/git-mcp-go/releases/latest)"
+DOWNLOAD_URL="$(echo $RELEASE | jq -r '.assets[] | select(.name | contains("linux-amd64")) | .browser_download_url')"
 curl -L -o ./git-mcp-go $DOWNLOAD_URL
 chmod +x ./git-mcp-go
 
 # Setup the mcp server (.gitpod.yml, dotfiles repo, etc.)
-./git-mcp-go setup -r $GITPOD_REPO_ROOT --write-access="$GIT_MCP_WRITE_ACCESS" --auto-approve=allow-local-only || true
+./git-mcp-go setup -r $GITPOD_REPO_ROOT --write-access="${GIT_MCP_WRITE_ACCESS:-false}" --auto-approve=allow-local-only || true
 rm -f ./git-mcp-go
 
 popd
