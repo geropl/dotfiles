@@ -48,8 +48,12 @@ curl -L -o ./github-mcp-go $DOWNLOAD_URL
 chmod +x ./github-mcp-go
 
 # Setup the mcp server (.gitpod.yml, dotfiles repo, etc.)
+# Use the Gitpod credential-helper to retrieve the GitHub token
+export GITHUB_PERSONAL_ACCESS_TOKEN="$(printf '%s\n' host=github.com | gp credential-helper get | sort | head -2 | tail -1 | sed 's;password=;;')"
 ./github-mcp-go setup --write-access="${GITHUB_MCP_WRITE_ACCESS:-false}" --auto-approve=allow-read-only || true
+# Cleanup, as both binary and token are persisted in a directory / config file in /home/gitpod
 rm -f ./github-mcp-go
+unset GITHUB_PERSONAL_ACCESS_TOKEN
 
 popd
 
