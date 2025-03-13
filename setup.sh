@@ -20,7 +20,7 @@ cat .bashrc >> ~/.bashrc
 echo "Setting up git..."
 printf "\n[include]\npath = /home/gitpod/.dotfiles/.gitconfig\n" >> ~/.gitconfig
 
-# linear MCP server
+### linear MCP server
 # TODO(gpl): Think about a) referencing a fixed commit hash for the script, and b) a fixed version instead of "latest"
 RELEASE="$(curl -s https://api.github.com/repos/geropl/linear-mcp-go/releases/latest)"
 DOWNLOAD_URL="$(echo $RELEASE | jq -r '.assets[] | select(.name | contains("linux")) | .browser_download_url')"
@@ -30,7 +30,7 @@ chmod +x ./linear-mcp-go
 ./linear-mcp-go setup --write-access="${LINEAR_MCP_WRITE_ACCESS:-false}" --auto-approve=allow-read-only || true
 rm -f ./linear-mcp-go
 
-# git MCP server
+### git MCP server
 RELEASE="$(curl -s https://api.github.com/repos/geropl/git-mcp-go/releases/latest)"
 DOWNLOAD_URL="$(echo $RELEASE | jq -r '.assets[] | select(.name | contains("linux-amd64")) | .browser_download_url')"
 curl -L -o ./git-mcp-go $DOWNLOAD_URL
@@ -39,6 +39,17 @@ chmod +x ./git-mcp-go
 # Setup the mcp server (.gitpod.yml, dotfiles repo, etc.)
 ./git-mcp-go setup -r $GITPOD_REPO_ROOT --write-access="${GIT_MCP_WRITE_ACCESS:-false}" --auto-approve=allow-local-only || true
 rm -f ./git-mcp-go
+
+
+### GitHub MCP server
+RELEASE="$(curl -s https://api.github.com/repos/geropl/github-mcp-go/releases/latest)"
+DOWNLOAD_URL="$(echo $RELEASE | jq -r '.assets[] | select(.name | contains("linux_amd64")) | .browser_download_url')"
+curl -L -o ./github-mcp-go $DOWNLOAD_URL
+chmod +x ./github-mcp-go
+
+# Setup the mcp server (.gitpod.yml, dotfiles repo, etc.)
+./github-mcp-go setup --write-access="${GITHUB_MCP_WRITE_ACCESS:-false}" --auto-approve=allow-read-only || true
+rm -f ./github-mcp-go
 
 popd
 
