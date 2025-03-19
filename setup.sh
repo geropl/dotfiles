@@ -56,41 +56,8 @@ rm -f ./github-mcp-go
 unset GITHUB_PERSONAL_ACCESS_TOKEN
 
 # Configure this hook to replace FAKE TOKEN
-# Use "gp credential-helper" once available to retrieve the GitHub token
-cat << EOF >> ~/.bashrc
-
-### BLOCK START - github-mcp-go credential hook
-# "gp credential-helper" hook
-
-# Search for all files under ~/.vscode-server/data/User/globalStorage/ for GITHUB_PERSONAL_ACCESS_TOKEN_REPLACE_ME
-# If there are findings, iterate all files and replace the token
-FINDINGS=$(grep -nrl "GITHUB_PERSONAL_ACCESS_TOKEN_REPLACE_ME" ~/.vscode-server/data/User/globalStorage 2>/dev/null)
-if [ -n "$FINDINGS" ]; then
-    # store state of pipefail so we can restore later
-    set -o | grep pipefail | grep on
-    PIPEFAIL_ON=$?
-    
-    set -o pipefail # we need this on
-    export GITHUB_PERSONAL_ACCESS_TOKEN="$(printf '%s\n' host=github.com | gp credential-helper get | sort | head -2 | tail -1 | sed 's;password=;;')"
-    if [ "$?" -eq 0 ]; then
-        while IFS= read -r FILE; do
-            sed -i 's/GITHUB_PERSONAL_ACCESS_TOKEN_REPLACE_ME/'"$GITHUB_PERSONAL_ACCESS_TOKEN"'/g' "$FILE"
-        done <<< "$FINDINGS"
-
-        unset GITHUB_PERSONAL_ACCESS_TOKEN
-    else
-        echo "GitHub MCP server: Failed to get GITHUB_PERSONAL_ACCESS_TOKEN from gp credential-helper"
-    fi
-
-
-    # if pipefail was off, disable it
-    if [ "$PIPEFAIL_ON" -ne 0 ]; then
-        set +o pipefail
-    fi
-fi
-### BLOCK END - github-mcp-go credential hook
-
-EOF
+# Uses "gp credential-helper" once available to retrieve the GitHub token
+cat github-mcp-go-token-hook >> ~/.bashrc
 
 popd
 
