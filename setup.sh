@@ -3,13 +3,15 @@ set -ex
 
 echo "Setting up dotfiles... 🔧"
 
+# Get the directory where this script is located
+DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-if [[ ! -d "/home/gitpod/.dotfiles" ]]; then
+if [[ ! -d "$DOTFILES_DIR" ]]; then
     echo "Cannot find dotfiles directory. Exiting. 🚪"
     exit 0
 fi
 
-pushd "/home/gitpod/.dotfiles"
+pushd "$DOTFILES_DIR"
 
 # bash
 echo "Setting up bash..."
@@ -18,7 +20,7 @@ cat .bashrc >> ~/.bashrc
 
 # git
 echo "Setting up git..."
-printf "\n[include]\npath = /home/gitpod/.dotfiles/.gitconfig\n" >> ~/.gitconfig
+printf "\n[include]\npath = $DOTFILES_DIR/.gitconfig\n" >> ~/.gitconfig
 
 ### linear MCP server
 # TODO(gpl): Think about a) referencing a fixed commit hash for the script, and b) a fixed version instead of "latest"
