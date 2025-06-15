@@ -22,6 +22,10 @@ cat .bashrc >> ~/.bashrc
 echo "Setting up git..."
 printf "\n[include]\npath = $DOTFILES_DIR/.gitconfig\n" >> ~/.gitconfig
 
+# claude
+echo "Setting up git..."
+./setup-claude.sh
+
 ### linear MCP server
 # TODO(gpl): Think about a) referencing a fixed commit hash for the script, and b) a fixed version instead of "latest"
 RELEASE="$(curl -s https://api.github.com/repos/geropl/linear-mcp-go/releases/latest)"
