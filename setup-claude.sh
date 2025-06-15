@@ -17,7 +17,7 @@ claude config set -g theme light
 DEST="$HOME/.claude.json"
 if [ ! -f "$DEST" ]; then
     echo "📋 Copying personal Claude Code config from '/root/custom-claude.json'..."
-    sudo cp $HOME/custom-claude.json "$DEST" || {
+    sudo cp "$HOME/custom-claude.json" "$DEST" || {
         echo "ℹ️  No personal Claude Code config found at '/root/custom-claude.json', skipping copy"
         return 0
     }
