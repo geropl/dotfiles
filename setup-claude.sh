@@ -12,8 +12,6 @@ else
     # fi
 fi
 
-claude config set -g theme light
-
 DEST="$HOME/.claude.json"
 if [ ! -f "$DEST" ]; then
     echo "📋 Copying personal Claude Code config from '/root/custom-claude.json'..."
