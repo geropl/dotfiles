@@ -19,6 +19,8 @@ if [ ! -f "$DEST" ]; then
         echo "ℹ️  No personal Claude Code config found at '/root/custom-claude.json', skipping copy"
         return 0
     }
+else
+    echo "ℹ️ Claude Code config already existing at '$DEST'."
 fi
 
 sudo chown "$(id -u):$(id -g)" "$DEST"
