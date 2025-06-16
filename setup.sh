@@ -33,8 +33,7 @@ DOWNLOAD_URL="$(echo $RELEASE | jq -r '.assets[] | select(.name | contains("linu
 curl -L -o ./linear-mcp-go "$DOWNLOAD_URL"
 chmod +x ./linear-mcp-go
 
-# Don't specify --project-path to install into all projects
-./linear-mcp-go setup --write-access="${LINEAR_MCP_WRITE_ACCESS:-false}" --auto-approve=allow-read-only --tool=cline,claude-code || true
+./linear-mcp-go setup --write-access="${LINEAR_MCP_WRITE_ACCESS:-false}" --auto-approve=allow-read-only --tool=cline,claude-code --project-path="$GITPOD_REPO_ROOT" || true
 rm -f ./linear-mcp-go
 
 ### git MCP server
