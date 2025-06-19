@@ -54,7 +54,7 @@ if [ ! -f ~/.claude/settings.json ]; then
       "Bash(yarn tsc:*)",
       "WebFetch(domain:www.gitpod.io)",
       "WebFetch(domain:docs.gitpod.io)",
-      "mcp__linear__*"
+      "mcp__linear*"
     ],
     "deny": []
   }
