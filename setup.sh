@@ -26,6 +26,7 @@ printf "\n[include]\npath = $DOTFILES_DIR/.gitconfig\n" >> ~/.gitconfig
 echo "Setting up git..."
 ./setup-claude.sh
 
+
 ### linear MCP server
 # TODO(gpl): Think about a) referencing a fixed commit hash for the script, and b) a fixed version instead of "latest"
 RELEASE="$(curl -s https://api.github.com/repos/geropl/linear-mcp-go/releases/latest)"
@@ -36,6 +37,7 @@ chmod +x ./linear-mcp-go
 # Claude Code: Don't specify --project-path to register on user-scope
 ./linear-mcp-go setup --write-access="${LINEAR_MCP_WRITE_ACCESS:-false}" --auto-approve=allow-read-only --tool=cline,claude-code || true
 rm -f ./linear-mcp-go
+
 
 ### git MCP server
 RELEASE="$(curl -s https://api.github.com/repos/geropl/git-mcp-go/releases/latest)"
@@ -65,6 +67,17 @@ unset GITHUB_PERSONAL_ACCESS_TOKEN
 # Configure this hook to replace FAKE TOKEN
 # Uses "gp credential-helper" once available to retrieve the GitHub token
 cat github-mcp-go-token-hook >> ~/.bashrc
+
+
+### gemini MCP server
+RELEASE="$(curl -s https://api.github.com/repos/geropl/gemini-mcp-go/releases/latest)"
+DOWNLOAD_URL="$(echo $RELEASE | jq -r '.assets[] | select(.name | contains("linux")) | .browser_download_url')"
+curl -L -o ./gemini-mcp-go "$DOWNLOAD_URL"
+chmod +x ./gemini-mcp-go
+
+./gemini-mcp-go setup --tool=claude-code || true
+rm -f ./gemini-mcp-go
+
 
 popd
 
