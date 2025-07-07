@@ -54,6 +54,7 @@ if [ ! -f ~/.claude/settings.json ]; then
       "Bash(yarn test:*)",
       "Bash(yarn lint:*)",
       "Bash(yarn tsc:*)",
+      "Bash(leeway:*)",
       "WebFetch(domain:www.gitpod.io)",
       "WebFetch(domain:docs.gitpod.io)",
       "mcp__linear"
