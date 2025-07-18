@@ -32,6 +32,7 @@ PROJECT_PATH="$(find /workspaces -maxdepth 1 -type d ! -name ".*" ! -path "/work
 if [ -z "$PROJECT_PATH" ]; then
     PROJECT_PATH="$(find /workspace -maxdepth 1 -type d ! -name ".*" ! -path "/workspace" | head -1)"
 fi
+echo "PROJECT_PATH: $PROJECT_PATH"
 
 ### linear MCP server
 # TODO(gpl): Think about a) referencing a fixed commit hash for the script, and b) a fixed version instead of "latest"
