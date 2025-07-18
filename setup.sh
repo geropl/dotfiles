@@ -29,6 +29,9 @@ echo "Setting up git..."
 # Required by some MCP server setups
 # As Gitpod does not provide one right now, we guess one ourselves
 PROJECT_PATH="$(find /workspaces -maxdepth 1 -type d ! -name ".*" ! -path "/workspaces" | head -1)"
+if [ -z "$PROJECT_PATH" ]; then
+    PROJECT_PATH="$(find /workspace -maxdepth 1 -type d ! -name ".*" ! -path "/workspace" | head -1)"
+fi
 
 ### linear MCP server
 # TODO(gpl): Think about a) referencing a fixed commit hash for the script, and b) a fixed version instead of "latest"
