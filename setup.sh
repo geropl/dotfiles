@@ -26,6 +26,9 @@ printf "\n[include]\npath = $DOTFILES_DIR/.gitconfig\n" >> ~/.gitconfig
 echo "Setting up git..."
 ./setup-claude.sh
 
+# Required by some MCP server setups
+# As Gitpod does not provide one right now, we guess one ourselves
+PROJECT_PATH="$(find /workspaces -maxdepth 1 -type d ! -name ".*" ! -path "/workspaces" | head -1)"
 
 ### linear MCP server
 # TODO(gpl): Think about a) referencing a fixed commit hash for the script, and b) a fixed version instead of "latest"
@@ -35,7 +38,7 @@ curl -L -o ./linear-mcp-go "$DOWNLOAD_URL"
 chmod +x ./linear-mcp-go
 
 # Claude Code: Don't specify --project-path to register on user-scope
-./linear-mcp-go setup --write-access="${LINEAR_MCP_WRITE_ACCESS:-false}" --auto-approve=allow-read-only --tool=cline,claude-code || true
+./linear-mcp-go setup --write-access="${LINEAR_MCP_WRITE_ACCESS:-false}" --auto-approve=allow-read-only --project-path="$PROJECT_PATH" --tool=cline,claude-code,ona || true
 rm -f ./linear-mcp-go
 
 
