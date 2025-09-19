@@ -41,8 +41,8 @@ DOWNLOAD_URL="$(echo $RELEASE | jq -r '.assets[] | select(.name | contains("linu
 curl -L -o ./linear-mcp-go "$DOWNLOAD_URL"
 chmod +x ./linear-mcp-go
 
-# Claude Code: Don't specify --project-path to register on user-scope
-./linear-mcp-go setup --write-access="${LINEAR_MCP_WRITE_ACCESS:-false}" --auto-approve=allow-read-only --project-path="$PROJECT_PATH" --tool=cline,claude-code,ona || true
+# Setup: Don't specify --project-path to register on user-scope
+./linear-mcp-go setup --auto-approve=allow-read-only --project-path="$PROJECT_PATH" --tool=cline,claude-code,ona || true
 rm -f ./linear-mcp-go
 
 
