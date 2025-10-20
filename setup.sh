@@ -42,7 +42,7 @@ curl -L -o ./linear-mcp-go "$DOWNLOAD_URL"
 chmod +x ./linear-mcp-go
 
 # Setup: Don't specify --project-path to register on user-scope
-./linear-mcp-go setup --auto-approve=allow-read-only --project-path="$PROJECT_PATH" --tool=cline,claude-code,ona || true
+./linear-mcp-go setup --auto-approve=allow-read-only --project-path="$PROJECT_PATH" --tool=cline,claude-code || true
 rm -f ./linear-mcp-go
 
 
