@@ -22,16 +22,6 @@ cat .bashrc >> ~/.bashrc
 echo "Setting up git..."
 printf "\n[include]\npath = $DOTFILES_DIR/.gitconfig\n" >> ~/.gitconfig
 
-### gemini MCP server
-RELEASE="$(curl -s https://api.github.com/repos/geropl/gemini-mcp-go/releases/latest)"
-DOWNLOAD_URL="$(echo $RELEASE | jq -r '.assets[] | select(.name | contains("linux")) | .browser_download_url')"
-curl -L -o ./gemini-mcp-go "$DOWNLOAD_URL"
-chmod +x ./gemini-mcp-go
-
-./gemini-mcp-go setup --tool=cline || true
-rm -f ./gemini-mcp-go
-
-
 popd
 
 
